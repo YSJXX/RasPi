@@ -1,8 +1,13 @@
 # Wireless Capture
 ## To Do List
 - 무선 패킷 탐지 코드
-- lcap 작동 테스트
+- 각 필요 함수 만들기
+- 애러 로그파일 만들기
 
+
+# 작동 순서
+1. online , offline 선택
+2. open pcap 작동
 
 
 
