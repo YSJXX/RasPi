@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pcap/pcap.h>
+#include "header.h"
 using namespace std;
 
-int cui(){ // Wellcom Print
-    int select;
+CuiData cui(){ // Wellcom Print
+    CuiData cuiData;
+
     for(int count=0;count<10;++count){
         system("clear");
         printf("\n");
@@ -14,10 +16,12 @@ int cui(){ // Wellcom Print
         printf("\t\t\t┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ \n\n\n");
         printf("\t\t\t  1. online \t 2. offline \n\n");
         printf("\t\t\t input (1 or 2): ");
-        scanf("%d",&select);
-        if(select == 1 || select == 2) break;
+        scanf("%d",&cuiData.select);
+        printf("\t\t\t  Monitor mode On? [Y/n] :  ");
+        scanf("%c",cuiData.mode);
+        if(cuiData.select == 1 || cuiData.select == 2) break;
     }
-    return select;
+    return cuiData;
 }
 
 pcap_t* OpenPcap(int select){
@@ -30,7 +34,7 @@ pcap_t* OpenPcap(int select){
         handle = pcap_open_live(device,BUFSIZ,1,1000,errbuf); // BUFSIZ : 8192 , 3,4번째 인자가 아마 패킷 탐지 시간이였던거 같음.
     }else{
         printf("[ Start pcap open offline ] \n");
-        handle = pcap_open_offline("/home/pi/RasPi/Debug_Pcap",errbuf); //파일이름 , 
+        handle = pcap_open_offline("/home/pi/RasPi/Debug_Pcap/AP_YSJnetwork2G.pcap",errbuf); //파일이름 , 
     }
     
     if(handle == nullptr){
@@ -40,8 +44,8 @@ pcap_t* OpenPcap(int select){
 }
 int main(int argc, char* argv[]){
 
-    int select = cui();
-    pcap_t *handle = OpenPcap(select);
+    CuiData cuiData = cui();
+    pcap_t *handle = OpenPcap(cuiData.select);
     if(handle == nullptr) return -1;
     pcap_close(handle);
     return 0;
