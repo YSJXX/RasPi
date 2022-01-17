@@ -6,5 +6,8 @@
 // Pcap Open Func
 pcap_t* OpenPcap(int select);
 
-// 정보 추출
+// Data extraction
 void PcapDataCheck(pcap_t * handle);
+
+//use Pcap_findalldevs() to get a list of device
+void NetworkDeviceList()
