@@ -1,10 +1,11 @@
 # Wireless Capture
 ## To Do List
-- 무선 패킷 탐지 코드
+- SNI, http, DNS, SMTP에서 이메일 주소, 주변 SSID, 
 - 각 필요 함수 만들기
 - 애러 로그파일 만들기
 - 어느정도 개발 진행 후 함수 기능별 정리하기
 - cui 함수에서 인터페이스 선택 후 모니터모드 설정 기능 추가.
+- pcap_loop() testing
 
 # 작동 순서
 1. online , offline 선택
