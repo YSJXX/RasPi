@@ -1,5 +1,4 @@
 #include <pcap/pcap.h>
-
 #define True 1
 #define Fales 0
 
@@ -10,4 +9,4 @@ pcap_t* OpenPcap(int select);
 void PcapDataCheck(pcap_t * handle);
 
 //use Pcap_findalldevs() to get a list of device
-void NetworkDeviceList()
+void NetworkDeviceList();
