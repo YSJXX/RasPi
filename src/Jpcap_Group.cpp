@@ -27,18 +27,32 @@ pcap_t* OpenPcap(int select){
 //Pcap에서 유의미한 정보 유/무 확인
 void PcapDataCheck(pcap_t * handle){
     // Packet Type
+    while(1){
+        struct pcap_pkthdr* header;
+        const uint8_t *pkt;
+        int res = pcap_next_ex(handle,&header,&pkt);
+        if(res == 0) continue;
+        
+        uint8_t* packet = const_cast<uint8_t *>(pkt);
+        Radiotap *radiotap = reinterpret_cast<Radiotap*>(packet);
+        uint8_t typeCheck = radiotap->j_length+1;   //typeCheck : beacon,prob,data 등 패킷 타입 확인
+        
+        // SSID , ESSID
+        PacketAnalysis_80211(handle,radiotap,packet);
 
-    // 802.11 
-    // PacketAnalysis_80211(handle);
-
-    // // TCP(http)
-    // PacketAnalysis_tcp(handle);
-    
-    // // UDP
-    // PacketAnalysis_udp(handle);
+        // // TCP(QoS data(0x0028))
+        // PacketAnalysis_tcp(handle);
+        
+        
+        // // UDP (Data(0x0020), QosData(0x0028))
+        // PacketAnalysis_udp(handle);
+    }
 }
 
-void PacketAnalysis_80211(pcap_t *hadle){
+void PacketAnalysis_80211(pcap_t *hadle, Radiotap *radiotap, uint8_t *packet){
+    // radiotap 
+    Ieee80211_beacon_frame *ieee80211_beacon = reinterpret_cast<Ieee80211_beacon_frame*>(packet + radiotap->j_length);
+    Tag_ssid * ssid =reinterpret_cast<Tag_ssid *>(packet + radiotap->j_length +24+12);   // 24 : beacon length, 12 : fixed parameters length
     
 }
 
