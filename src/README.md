@@ -1,11 +1,18 @@
 # Wireless Capture
-## To Do List
-- SNI, http, DNS, SMTP에서 이메일 주소, 주변 SSID, 
-- 각 필요 함수 만들기
-- 애러 로그파일 만들기
-- 어느정도 개발 진행 후 함수 기능별 정리하기
-- cui 함수에서 인터페이스 선택 후 모니터모드 설정 기능 추가.
-- pcap_loop() testing
+
+> ## To Do List
+> 1. void PacketAnalysis_80211(pcap_t *hadle);
+>>       radiotap header는 건너뛰고 id(),pw(),쿠키 세션 탐지(),ssid()
+> 2. void PacketAnalysis_tcp(pcap_t *hadle);
+> 3. void PacketAnalysis_udp(pcap_t *hadle);
+>
+> - SNI, http, DNS, SMTP에서 이메일 주소, 주변 SSID, 
+>>      UDP, http, TCP 정보가 있는 패킷 파일 필요
+> - 각 필요 함수 만들기
+> - 애러 로그파일 만들기
+> - 어느정도 개발 진행 후 함수 기능별 정리하기
+> - cui 함수에서 인터페이스 선택 후 모니터모드 설정 기능 추가.
+> - pcap_loop() testing
 
 # 작동 순서
 1. online , offline 선택
