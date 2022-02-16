@@ -39,7 +39,7 @@ void PcapDataCheck(pcap_t * handle);
 void NetworkDeviceList();
 
 // 802.11 Packet Analysis
-void PacketAnalysis_80211(pcap_t *hadle);
+void PacketAnalysis_80211(pcap_t *hadle, uint8_t* packet);
 
 // tcp(http) Packet Analysis
 void PacketAnalysis_tcp(pcap_t *hadle);

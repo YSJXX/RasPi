@@ -3,6 +3,8 @@
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Jpcap_Group.h"
 
 pcap_t* OpenPcap(int select){
@@ -27,7 +29,8 @@ pcap_t* OpenPcap(int select){
 //Pcap에서 유의미한 정보 유/무 확인
 void PcapDataCheck(pcap_t * handle){
     // Packet Type
-    while(1){
+    int loopCnt = 100;
+    while(loopCnt--){
         struct pcap_pkthdr* header;
         const uint8_t *pkt;
         int res = pcap_next_ex(handle,&header,&pkt);
@@ -35,11 +38,12 @@ void PcapDataCheck(pcap_t * handle){
         
         uint8_t* packet = const_cast<uint8_t *>(pkt);
         Radiotap *radiotap = reinterpret_cast<Radiotap*>(packet);
-        uint8_t typeCheck = radiotap->j_length+1;   //typeCheck : beacon,prob,data 등 패킷 타입 확인
+        uint8_t typeCheck = *(packet+radiotap->j_length);   //typeCheck : beacon,prob,data 등 패킷 타입 확인
         
         // SSID , ESSID
-        PacketAnalysis_80211(handle,radiotap,packet);
-
+        if(typeCheck == 0x80)
+            PacketAnalysis_80211(handle,packet);
+        
         // // TCP(QoS data(0x0028))
         // PacketAnalysis_tcp(handle);
         
@@ -49,11 +53,18 @@ void PcapDataCheck(pcap_t * handle){
     }
 }
 
-void PacketAnalysis_80211(pcap_t *hadle, Radiotap *radiotap, uint8_t *packet){
+void PacketAnalysis_80211(pcap_t *hadle, uint8_t *packet){
     // radiotap 
+    Radiotap *radiotap = reinterpret_cast<Radiotap*>(packet);
     Ieee80211_beacon_frame *ieee80211_beacon = reinterpret_cast<Ieee80211_beacon_frame*>(packet + radiotap->j_length);
-    Tag_ssid * ssid =reinterpret_cast<Tag_ssid *>(packet + radiotap->j_length +24+12);   // 24 : beacon length, 12 : fixed parameters length
+    Tag_ssid * tag_ssid =reinterpret_cast<Tag_ssid *>(packet + radiotap->j_length +24+12);   // 24 : beacon length, 12 : fixed parameters length
+    // ssid 
+    char * ssid = reinterpret_cast<char*>(malloc(tag_ssid->j_tag_length+1));
+    // AP Mac address
     
+    strncpy(ssid,tag_ssid->SSID,tag_ssid->j_tag_length);
+    printf("[# Print]: %s\n",ssid);
+    free(ssid);
 }
 
 // 연결된 랜카드 목록
