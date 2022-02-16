@@ -5,6 +5,7 @@
 >>       radiotap header는 건너뛰고 id(),pw(),쿠키 세션 탐지(),ssid()
 > 2. void PacketAnalysis_tcp(pcap_t *hadle);
 > 3. void PacketAnalysis_udp(pcap_t *hadle);
+> 4. ssid, id 등 저장 자료구조 무엇으로 할지 생각
 >
 > - SNI, http, DNS, SMTP에서 이메일 주소, 주변 SSID, 
 >>      UDP, http, TCP 정보가 있는 패킷 파일 필요
@@ -44,6 +45,11 @@
 ## 패킷탐지 기능
 - 세션 탐지
 
+
+## 참조
+- - - - -
+ieee802.11 type/subtype 종류
+> https://howiwifi.com/2020/07/13/802-11-frame-types-and-formats/
 
 <br><br><br>
 ### [마크다운(Markdown) 사용법][git]
