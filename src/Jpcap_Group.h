@@ -7,6 +7,14 @@ struct uint48{
     unsigned long long v:48;
 }__attribute__((packed));
 
+// ieee802.11 Frame Control Field
+typedef struct _FrameControlField{
+	uint8_t Version : 2;
+	uint8_t Type : 2;           // Three types: Management(0) , Control(1) , Data(2)
+	uint8_t Subtype : 4;        
+	uint8_t Flag;
+}FrameControlField;
+
 typedef struct _Radiotap{
     uint8_t j_revision;
     uint8_t j_pad;
@@ -15,7 +23,7 @@ typedef struct _Radiotap{
 }Radiotap;
 
 typedef struct _ieee80211_beacon_frame{
-    uint16_t j_Frame_control;
+    FrameControlField j_Frame_control;
     uint16_t j_Duration;
     uint48 j_Destination_address;
     uint48 j_Source_address;

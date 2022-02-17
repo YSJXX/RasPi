@@ -38,11 +38,19 @@ void PcapDataCheck(pcap_t * handle){
         
         uint8_t* packet = const_cast<uint8_t *>(pkt);
         Radiotap *radiotap = reinterpret_cast<Radiotap*>(packet);
-        uint8_t typeCheck = *(packet+radiotap->j_length);   //typeCheck : beacon,prob,data 등 패킷 타입 확인
-        
-        // SSID , ESSID
-        if(typeCheck == 0x80)
+        FrameControlField* frame_control_field = reinterpret_cast<FrameControlField*>(packet+radiotap->j_length);   //typeCheck : beacon,prob,data 등 패킷 타입 확인
+
+        // Three types: Management(0) , Control(1) , Data(2)
+        if(frame_control_field->Type == 0){ // Management(0)
             PacketAnalysis_80211(handle,packet);
+        }else if(frame_control_field->Type == 1){ // Control(1)
+
+        }else if(frame_control_field->Type == 2){ // Data(2)
+            
+        }else{
+            // error
+        }
+        
         
         // // TCP(QoS data(0x0028))
         // PacketAnalysis_tcp(handle);
