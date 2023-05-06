@@ -1,2 +1,6 @@
+.gitignore
 *_ing
 note.txt
+.DS_Store
+Debug_Packet1.pcapng
+

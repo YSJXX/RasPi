@@ -9,10 +9,10 @@ struct uint48{
 
 // ieee802.11 Frame Control Field
 typedef struct _FrameControlField{
-	uint8_t Version : 2;
-	uint8_t Type : 2;           // Three types: Management(0) , Control(1) , Data(2)
-	uint8_t Subtype : 4;        
-	uint8_t Flag;
+	uint8_t version : 2;
+	uint8_t type : 2;           // Three types: Management(0) , Control(1) , Data(2)
+	uint8_t subtype : 4;
+	uint8_t flag;
 }FrameControlField;
 
 typedef struct _Radiotap{
@@ -47,10 +47,12 @@ void PcapDataCheck(pcap_t * handle);
 void NetworkDeviceList();
 
 // 802.11 Packet Analysis
-void PacketAnalysis_80211(pcap_t *hadle, uint8_t* packet);
+void PacketAnalysis_80211(pcap_t *handle, uint8_t* packet);
 
 // tcp(http) Packet Analysis
-void PacketAnalysis_tcp(pcap_t *hadle);
+void PacketAnalysis_tcp(pcap_t *handle);
 
 // udp Packet Analysis
-void PacketAnalysis_udp(pcap_t *hadle);
+void PacketAnalysis_udp(pcap_t *handle);
+
+void i80211mac_data_frame_check(pcap_t *handle, uint8_t packet);
