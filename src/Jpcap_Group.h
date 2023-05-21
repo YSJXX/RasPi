@@ -25,9 +25,9 @@ typedef struct _Radiotap{
 typedef struct _ieee80211_beacon_frame{
     FrameControlField j_Frame_control;
     uint16_t j_Duration;
-    uint48 j_Destination_address;
-    uint48 j_Source_address;
-    uint48 j_BSSID;
+    struct uint48 j_Destination_address;
+    struct uint48 j_Source_address;
+    struct uint48 j_BSSID;
     uint16_t j_SequenceControl;
 }Ieee80211_beacon_frame;
 

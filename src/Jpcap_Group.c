@@ -56,11 +56,13 @@ void PcapDataCheck(pcap_t * handle){
 		else if(frame_control_field->type == 1)
 		{
 			// Control(1)
-        }else if(frame_control_field->type == 2)
+        }
+		else if(frame_control_field->type == 2)
 		{
 			// Data(2)
-			i80211mac_data_frame_check(handle, pkt);
-        }else
+			i80211mac_data_frame_check(handle, packet);
+        }
+		else
 		{
             // error
         }
